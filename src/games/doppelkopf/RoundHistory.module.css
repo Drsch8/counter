@@ -1,0 +1,56 @@
+.history { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.empty { color: var(--text-muted); text-align: center; margin-top: 2rem; }
+
+.undoBtn {
+  align-self: flex-start;
+  background: var(--surface2);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+
+.roundNum { color: var(--text-muted); font-size: 0.85rem; }
+
+.solo {
+  background: var(--surface2);
+  color: var(--accent2);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.reWin { color: var(--accent2); }
+.kontraWin { color: var(--accent); }
+
+.teams { font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.1rem; }
+.points { font-size: 0.9rem; }
+
+.deltas {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.pos { color: var(--accent2); }
+.neg { color: var(--accent); }
+.zero { color: var(--text-muted); }

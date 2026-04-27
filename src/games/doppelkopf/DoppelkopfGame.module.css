@@ -1,0 +1,114 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--bg);
+}
+
+/* ── Header ──────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.9rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.header h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.roundLabel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gameIdBtn {
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.55rem;
+  transition: color 0.12s, border-color 0.12s;
+}
+.gameIdBtn:hover { color: var(--ink-2); border-color: var(--border-strong); }
+
+.newGameBtn {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.75rem;
+  letter-spacing: 0.01em;
+}
+.newGameBtn:hover { border-color: var(--border-strong); color: var(--ink); }
+
+/* ── Main scroll area ────────────────────── */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1rem;
+}
+
+/* ── Footer ─────────────────────────────── */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.addRoundBtn {
+  flex: 1;
+  background: var(--navy);
+  color: #fff;
+  padding: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.25);
+  transition: box-shadow 0.15s, background 0.12s;
+}
+.addRoundBtn:hover { background: #24477A; box-shadow: 0 4px 14px rgba(30,58,95,0.3); }
+.addRoundBtn:active { opacity: 1; background: #1A3055; }
+
+.bockIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--purple-soft);
+  color: var(--purple);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid #C4B5FD;
+}

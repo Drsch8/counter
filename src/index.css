@@ -1,0 +1,71 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Palette */
+  --bg:            #F5F2EB;
+  --surface:       #FFFFFF;
+  --surface-warm:  #FDFCF9;
+  --border:        #E4DFD5;
+  --border-strong: #C8C0B3;
+
+  /* Text */
+  --ink:           #1A1714;
+  --ink-2:         #6B6358;
+  --ink-3:         #A89F95;
+
+  /* Semantic */
+  --green:         #14532D;
+  --green-soft:    #DCFCE7;
+  --red:           #7F1D1D;
+  --red-soft:      #FEE2E2;
+  --navy:          #1E3A5F;
+  --navy-soft:     #DBEAFE;
+  --purple:        #4C1D95;
+  --purple-soft:   #EDE9FE;
+
+  /* Utility */
+  --radius-sm:     6px;
+  --radius:        12px;
+  --radius-lg:     18px;
+  --shadow-card:   0 1px 3px rgba(26,23,20,0.07), 0 4px 14px rgba(26,23,20,0.05);
+  --shadow-lift:   0 2px 8px rgba(26,23,20,0.1), 0 8px 24px rgba(26,23,20,0.07);
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1rem;
+  transition: background 0.12s, opacity 0.12s, box-shadow 0.12s;
+}
+button:active { opacity: 0.75; }
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--ink);
+}
+input:focus { outline: none; }
+
+/* Tabular figures for all numbers in the score context */
+.tabular { font-variant-numeric: tabular-nums; }

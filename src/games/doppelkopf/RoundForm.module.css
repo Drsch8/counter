@@ -1,0 +1,211 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+/* ── Top bar ─────────────────────────────── */
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding-bottom: 0.25rem;
+}
+
+.cancelBtn {
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0;
+}
+.cancelBtn:hover { color: var(--ink); }
+
+.bockBanner {
+  display: inline-flex;
+  align-items: center;
+  background: var(--purple-soft);
+  color: var(--purple);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid #C4B5FD;
+}
+
+/* ── Section card ────────────────────────── */
+.section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 1rem 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ── Game type segmented ─────────────────── */
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
+  border: 1px solid var(--border);
+}
+
+.segBtn {
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.6rem;
+  border-radius: calc(var(--radius-sm) - 2px);
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.segActive {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(26,23,20,0.1), 0 1px 2px rgba(26,23,20,0.07);
+}
+
+/* ── Re / Kontra team toggle ─────────────── */
+.teamToggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.teamBtn {
+  padding: 0.65rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--ink-2);
+  transition: all 0.12s;
+}
+
+.teamRe {
+  background: var(--navy-soft);
+  border-color: var(--navy);
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.teamKontra {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ── Player grid ─────────────────────────── */
+.playerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.playerBtn {
+  padding: 0.875rem 0.5rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+
+.playerRe {
+  background: var(--navy-soft);
+  border-color: var(--navy);
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.playerKontra {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ── Points input ────────────────────────── */
+.pointsInput {
+  width: 100%;
+  font-size: 3rem;
+  font-weight: 300;
+  font-family: 'Playfair Display', Georgia, serif;
+  text-align: center;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--ink);
+  padding: 0.5rem 1rem 0.6rem;
+  letter-spacing: -0.02em;
+  transition: border-color 0.12s;
+  -moz-appearance: textfield;
+}
+.pointsInput::-webkit-inner-spin-button,
+.pointsInput::-webkit-outer-spin-button { -webkit-appearance: none; }
+.pointsInput::placeholder { color: var(--ink-3); }
+.pointsInput:focus { border-color: var(--navy); }
+
+/* ── Bock checkbox ───────────────────────── */
+.bockLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.bockCheck {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--purple);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.bockDesc {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+/* ── Submit ──────────────────────────────── */
+.submitBtn {
+  background: var(--navy);
+  color: #fff;
+  padding: 1rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  width: 100%;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.25);
+  transition: background 0.12s, box-shadow 0.12s;
+  margin-top: 0.25rem;
+}
+.submitBtn:hover { background: #24477A; }
+.submitBtn:active { opacity: 1; background: #1A3055; }
