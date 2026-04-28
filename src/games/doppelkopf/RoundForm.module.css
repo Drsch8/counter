@@ -1,211 +1,203 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 0.875rem;
+  gap: 0.6rem;
+  padding: 0.75rem 0.875rem 0.875rem;
 }
 
-/* ── Top bar ─────────────────────────────── */
-.topBar {
+/* ── Row 1: type + points ───────────────── */
+.row1 {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
-  padding-bottom: 0.25rem;
+  gap: 0.6rem;
 }
 
-.cancelBtn {
-  background: transparent;
-  color: var(--ink-2);
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.25rem 0;
-}
-.cancelBtn:hover { color: var(--ink); }
-
-.bockBanner {
-  display: inline-flex;
-  align-items: center;
-  background: var(--purple-soft);
-  color: var(--purple);
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.3rem 0.65rem;
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border: 1px solid #C4B5FD;
-}
-
-/* ── Section card ────────────────────────── */
-.section {
-  background: var(--surface);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  padding: 1rem 1rem 1.1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  box-shadow: var(--shadow-card);
-}
-
-.label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-/* ── Game type segmented ─────────────────── */
 .segmented {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   background: var(--bg);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 3px;
-  gap: 3px;
-  border: 1px solid var(--border);
+  padding: 2px;
+  gap: 2px;
+  flex-shrink: 0;
 }
 
 .segBtn {
   background: transparent;
-  color: var(--ink-2);
-  font-size: 0.9rem;
+  color: var(--ink-3);
+  font-size: 0.82rem;
   font-weight: 500;
-  padding: 0.6rem;
+  padding: 0.4rem 0.75rem;
   border-radius: calc(var(--radius-sm) - 2px);
-  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  transition: background 0.12s, color 0.12s;
+  white-space: nowrap;
 }
 .segActive {
   background: var(--surface);
   color: var(--ink);
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(26,23,20,0.1), 0 1px 2px rgba(26,23,20,0.07);
+  box-shadow: 0 1px 3px rgba(26,23,20,0.1);
 }
 
-/* ── Re / Kontra team toggle ─────────────── */
-.teamToggle {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+.ptsWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: flex-end;
 }
 
-.teamBtn {
-  padding: 0.65rem;
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  font-weight: 500;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  color: var(--ink-2);
-  transition: all 0.12s;
+.bockPip {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--purple);
+  background: var(--purple-soft);
+  border: 1px solid #C4B5FD;
+  border-radius: var(--radius-sm);
+  padding: 0.15rem 0.4rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
-.teamRe {
-  background: var(--navy-soft);
-  border-color: var(--navy);
-  color: var(--navy);
-  font-weight: 600;
-}
-
-.teamKontra {
-  background: var(--red-soft);
-  border-color: var(--red);
-  color: var(--red);
-  font-weight: 600;
-}
-
-/* ── Player grid ─────────────────────────── */
-.playerGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-}
-
-.playerBtn {
-  padding: 0.875rem 0.5rem;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--ink-2);
-  transition: border-color 0.12s, color 0.12s, background 0.12s;
-}
-
-.playerRe {
-  background: var(--navy-soft);
-  border-color: var(--navy);
-  color: var(--navy);
-  font-weight: 600;
-}
-
-.playerKontra {
-  background: var(--red-soft);
-  border-color: var(--red);
-  color: var(--red);
-  font-weight: 600;
-}
-
-/* ── Points input ────────────────────────── */
-.pointsInput {
-  width: 100%;
-  font-size: 3rem;
+.ptsInput {
+  width: 5rem;
+  font-size: 1.6rem;
   font-weight: 300;
   font-family: 'Playfair Display', Georgia, serif;
   text-align: center;
   background: var(--bg);
   border: 1.5px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   color: var(--ink);
-  padding: 0.5rem 1rem 0.6rem;
+  padding: 0.3rem 0.5rem;
   letter-spacing: -0.02em;
-  transition: border-color 0.12s;
   -moz-appearance: textfield;
+  transition: border-color 0.12s;
 }
-.pointsInput::-webkit-inner-spin-button,
-.pointsInput::-webkit-outer-spin-button { -webkit-appearance: none; }
-.pointsInput::placeholder { color: var(--ink-3); }
-.pointsInput:focus { border-color: var(--navy); }
+.ptsInput::-webkit-inner-spin-button,
+.ptsInput::-webkit-outer-spin-button { -webkit-appearance: none; }
+.ptsInput::placeholder { color: var(--ink-3); }
+.ptsInput:focus { border-color: var(--navy); outline: none; }
 
-/* ── Bock checkbox ───────────────────────── */
+/* ── Row 2: player buttons ──────────────── */
+.playerRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+
+.playerBtn {
+  padding: 0.55rem 0.25rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: border-color 0.1s, background 0.1s, color 0.1s;
+}
+
+.playerSel {
+  background: var(--navy-soft);
+  border-color: var(--navy);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+/* ── Row 3: winner toggle (solo) ─────────── */
+.winnerRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.winBtn {
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--ink-2);
+  transition: all 0.1s;
+}
+
+.winRe {
+  background: var(--navy-soft);
+  border-color: var(--navy);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.winKontra {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ── Row 4: bock + undo + submit ─────────── */
+.row4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
+}
+
 .bockLabel {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  font-size: 0.9rem;
+  gap: 0.4rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--ink-2);
   cursor: pointer;
   user-select: none;
+  flex: 1;
 }
 
 .bockCheck {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1rem;
+  height: 1rem;
   accent-color: var(--purple);
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .bockDesc {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--ink-3);
   font-weight: 400;
 }
 
-/* ── Submit ──────────────────────────────── */
+.undoBtn {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--ink-3);
+  font-size: 1rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: color 0.12s, border-color 0.12s;
+}
+.undoBtn:hover { color: var(--ink-2); border-color: var(--border-strong); }
+
 .submitBtn {
   background: var(--navy);
   color: #fff;
-  padding: 1rem;
-  font-size: 0.9375rem;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  border-radius: var(--radius);
-  width: 100%;
+  border-radius: var(--radius-sm);
   letter-spacing: 0.01em;
-  box-shadow: 0 2px 8px rgba(30,58,95,0.25);
-  transition: background 0.12s, box-shadow 0.12s;
-  margin-top: 0.25rem;
+  box-shadow: 0 2px 6px rgba(30,58,95,0.22);
+  transition: background 0.12s, box-shadow 0.12s, opacity 0.12s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .submitBtn:hover { background: #24477A; }
-.submitBtn:active { opacity: 1; background: #1A3055; }
+.submitBtn:active { background: #1A3055; }
+.submitDim { opacity: 0.45; }

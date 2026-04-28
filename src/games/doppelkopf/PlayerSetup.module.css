@@ -77,3 +77,19 @@
   outline: none;
   border-bottom-color: var(--navy);
 }
+
+.startBtn {
+  background: var(--navy);
+  color: #fff;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  width: 100%;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px rgba(30,58,95,0.25);
+  transition: background 0.12s, box-shadow 0.12s;
+  margin-top: 0.25rem;
+}
+.startBtn:hover { background: #24477A; box-shadow: 0 4px 14px rgba(30,58,95,0.3); }
+.startBtn:active { background: #1A3055; }

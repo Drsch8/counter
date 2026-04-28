@@ -27,4 +27,5 @@ export interface GameState {
   rounds: Round[]
   scores: Record<number, number>
   bockRoundsRemaining: number
+  started: boolean
 }

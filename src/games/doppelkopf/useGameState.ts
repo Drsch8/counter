@@ -3,6 +3,7 @@ import { doc, setDoc, onSnapshot } from 'firebase/firestore'
 import { db } from '../../firebase'
 import type { GameState, Player, Round } from './types'
 import { calculateRound } from './scoring'
+import { applyRoundToGlobal, undoRoundFromGlobal } from './globalStats'
 
 const DEFAULT_PLAYERS: Player[] = [
   { id: 1, name: 'Player 1' },
@@ -17,13 +18,10 @@ function initialState(): GameState {
     rounds: [],
     scores: { 1: 0, 2: 0, 3: 0, 4: 0 },
     bockRoundsRemaining: 0,
+    started: false,
   }
 }
 
-// ── Game ID ────────────────────────────────
-// A short random ID stored in localStorage so the same browser
-// always reconnects to the same game. Share it with other players
-// to sync to the same Firestore document.
 function getOrCreateGameId(): string {
   const key = 'doppelkopf-game-id'
   const existing = localStorage.getItem(key)
@@ -43,7 +41,6 @@ export function useGameState() {
   const [state, setState] = useState<GameState>(initialState)
   const [synced, setSynced] = useState(false)
 
-  // Subscribe to Firestore document — updates state on any change from any device
   useEffect(() => {
     const unsub = onSnapshot(doc(db, 'games', gameId), snap => {
       if (snap.exists()) {
@@ -62,6 +59,14 @@ export function useGameState() {
     })
   }, [])
 
+  const startGame = useCallback(() => {
+    setState(s => {
+      const next = { ...s, started: true }
+      saveToFirestore(gameId, next)
+      return next
+    })
+  }, [])
+
   const addRound = useCallback((round: Omit<Round, 'id' | 'result' | 'bock' | 'bockTriggered'>, addBock: boolean) => {
     setState(s => {
       const id = s.rounds.length + 1
@@ -70,6 +75,8 @@ export function useGameState() {
       const fullRound: Round = { ...round, id, bock: isBock, bockTriggered }
       const result = calculateRound(fullRound, s.players, isBock)
       fullRound.result = result
+
+      applyRoundToGlobal(s.players, fullRound)
 
       const scores = { ...s.scores }
       for (const [idStr, delta] of Object.entries(result.scoreDeltas)) {
@@ -87,6 +94,8 @@ export function useGameState() {
     setState(s => {
       if (s.rounds.length === 0) return s
       const removed = s.rounds[s.rounds.length - 1]
+      undoRoundFromGlobal(s.players, removed)
+
       const rounds = s.rounds.slice(0, -1)
       const scores: Record<number, number> = {}
       for (const p of s.players) scores[p.id] = 0
@@ -111,5 +120,5 @@ export function useGameState() {
     setState(next)
   }, [])
 
-  return { state, synced, setPlayerName, addRound, removeLastRound, reset }
+  return { state, synced, setPlayerName, startGame, addRound, removeLastRound, reset }
 }

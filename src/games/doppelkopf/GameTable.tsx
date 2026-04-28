@@ -6,10 +6,9 @@ interface Props {
   players: Player[]
   rounds: Round[]
   onRenamePlayer: (id: number, name: string) => void
-  onUndo: () => void
 }
 
-export default function GameTable({ players, rounds, onRenamePlayer, onUndo }: Props) {
+export default function GameTable({ players, rounds, onRenamePlayer }: Props) {
   const [editing, setEditing] = useState<number | null>(null)
   const [draft, setDraft] = useState('')
 
@@ -89,9 +88,6 @@ export default function GameTable({ players, rounds, onRenamePlayer, onUndo }: P
         </table>
       </div>
 
-      {rounds.length > 0 && (
-        <button className={styles.undoBtn} onClick={onUndo}>↩ Undo last round</button>
-      )}
     </div>
   )
 }

@@ -3,34 +3,38 @@ import { useGameState, gameId } from './useGameState'
 import RoundForm from './RoundForm'
 import GameTable from './GameTable'
 import PlayerSetup from './PlayerSetup'
+import StatsModal from './StatsModal'
 import styles from './DoppelkopfGame.module.css'
 
 export default function DoppelkopfGame() {
-  const { state, synced, setPlayerName, addRound, removeLastRound, reset } = useGameState()
-  const [showForm, setShowForm] = useState(false)
+  const { state, synced, setPlayerName, startGame, addRound, removeLastRound, reset } = useGameState()
   const [showId, setShowId] = useState(false)
+  const [showStats, setShowStats] = useState(false)
 
   const isBockRound = state.bockRoundsRemaining > 0
 
-  if (showForm) {
+  // ── Setup screen ──────────────────────────
+  if (!state.started) {
     return (
       <div className={styles.app}>
         <header className={styles.header}>
           <h1>Doppelkopf</h1>
-          <span className={styles.roundLabel}>Round {state.rounds.length + 1}</span>
+          <button className={styles.gameIdBtn} onClick={() => setShowId(v => !v)} title="Game ID">
+            {synced ? '●' : '○'} {showId ? gameId : '···'}
+          </button>
         </header>
-        <main className={styles.main}>
-          <RoundForm
+        <main className={styles.setupMain}>
+          <PlayerSetup
             players={state.players}
-            isBockRound={isBockRound}
-            onSubmit={(round, addBock) => { addRound(round, addBock); setShowForm(false) }}
-            onCancel={() => setShowForm(false)}
+            onRename={setPlayerName}
+            onStart={startGame}
           />
         </main>
       </div>
     )
   }
 
+  // ── Game screen ───────────────────────────
   return (
     <div className={styles.app}>
       <header className={styles.header}>
@@ -39,32 +43,45 @@ export default function DoppelkopfGame() {
           <button className={styles.gameIdBtn} onClick={() => setShowId(v => !v)} title="Game ID">
             {synced ? '●' : '○'} {showId ? gameId : '···'}
           </button>
+          <button className={styles.headerBtn} onClick={() => setShowStats(true)}>Stats</button>
           <button
-            className={styles.newGameBtn}
+            className={styles.headerBtn}
             onClick={() => { if (confirm('Start a new game?')) reset() }}
-          >
-            New Game
-          </button>
+          >New Game</button>
         </div>
       </header>
-      <main className={styles.main}>
-        {state.rounds.length === 0 ? (
-          <PlayerSetup players={state.players} onRename={setPlayerName} />
-        ) : (
-          <GameTable
-            players={state.players}
-            rounds={state.rounds}
-            onRenamePlayer={setPlayerName}
-            onUndo={removeLastRound}
-          />
+
+      <div className={styles.tablePane}>
+        {isBockRound && (
+          <div className={styles.bockBanner}>
+            BOCK ×2 — {state.bockRoundsRemaining} round{state.bockRoundsRemaining !== 1 ? 's' : ''} remaining
+          </div>
         )}
-      </main>
-      <div className={styles.footer}>
-        {isBockRound && <span className={styles.bockIndicator}>BOCK ×2</span>}
-        <button className={styles.addRoundBtn} onClick={() => setShowForm(true)}>
-          + Round
-        </button>
+        <GameTable
+          players={state.players}
+          rounds={state.rounds}
+          onRenamePlayer={setPlayerName}
+        />
       </div>
+
+      <div className={styles.formPane}>
+        <RoundForm
+          players={state.players}
+          isBockRound={isBockRound}
+          onSubmit={(round, addBock) => addRound(round, addBock)}
+          onUndo={removeLastRound}
+          canUndo={state.rounds.length > 0}
+        />
+      </div>
+
+      {showStats && (
+        <StatsModal
+          players={state.players}
+          rounds={state.rounds}
+          scores={state.scores}
+          onClose={() => setShowStats(false)}
+        />
+      )}
     </div>
   )
 }

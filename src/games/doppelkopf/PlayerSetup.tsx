@@ -5,9 +5,10 @@ import styles from './PlayerSetup.module.css'
 interface Props {
   players: Player[]
   onRename: (id: number, name: string) => void
+  onStart: () => void
 }
 
-export default function PlayerSetup({ players, onRename }: Props) {
+export default function PlayerSetup({ players, onRename, onStart }: Props) {
   const [drafts, setDrafts] = useState<Record<number, string>>(
     () => Object.fromEntries(players.map(p => [p.id, p.name]))
   )
@@ -21,7 +22,7 @@ export default function PlayerSetup({ players, onRename }: Props) {
     <div className={styles.setup}>
       <div className={styles.intro}>
         <h2 className={styles.heading}>Who's playing?</h2>
-        <p className={styles.sub}>Tap a tile to set the player's name.</p>
+        <p className={styles.sub}>Enter names, then start the game.</p>
       </div>
 
       <div className={styles.grid}>
@@ -39,6 +40,10 @@ export default function PlayerSetup({ players, onRename }: Props) {
           </div>
         ))}
       </div>
+
+      <button className={styles.startBtn} onClick={onStart}>
+        Start Game
+      </button>
     </div>
   )
 }

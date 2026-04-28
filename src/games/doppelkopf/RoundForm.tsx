@@ -6,10 +6,11 @@ interface Props {
   players: Player[]
   isBockRound: boolean
   onSubmit: (round: Omit<Round, 'id' | 'result' | 'bock' | 'bockTriggered'>, addBock: boolean) => void
-  onCancel: () => void
+  onUndo: () => void
+  canUndo: boolean
 }
 
-export default function RoundForm({ players, isBockRound, onSubmit, onCancel }: Props) {
+export default function RoundForm({ players, isBockRound, onSubmit, onUndo, canUndo }: Props) {
   const [gameType, setGameType] = useState<GameType>('normal')
   const [winner, setWinner] = useState<Team>('re')
   const [selected, setSelected] = useState<number[]>([])
@@ -33,105 +34,92 @@ export default function RoundForm({ players, isBockRound, onSubmit, onCancel }: 
   }
 
   function handleSubmit() {
-    if (selected.length !== needed) {
-      alert(gameType === 'solo' ? 'Select the solo player' : 'Select the 2 winning players')
-      return
-    }
+    if (selected.length !== needed) return
     const rePoints = Math.max(0, Number(points) || 0)
-    onSubmit({ gameType, reTeam: selected, rePoints, winner }, addBock)
+    onSubmit({ gameType, reTeam: selected, rePoints, winner: gameType === 'normal' ? 're' : winner }, addBock)
     setSelected([])
     setPoints('')
     setWinner('re')
     setAddBock(false)
   }
 
+  const ready = selected.length === needed && (gameType === 'normal' || true)
+
   return (
     <div className={styles.form}>
 
-      <div className={styles.topBar}>
-        <button className={styles.cancelBtn} onClick={onCancel}>← Back</button>
-        {isBockRound && <span className={styles.bockBanner}>Bock · ×2</span>}
-      </div>
-
-      {/* Game type */}
-      <div className={styles.section}>
+      {/* Row 1: type toggle + points */}
+      <div className={styles.row1}>
         <div className={styles.segmented}>
-          <button className={`${styles.segBtn} ${gameType === 'normal' ? styles.segActive : ''}`} onClick={() => switchType('normal')}>Normal</button>
-          <button className={`${styles.segBtn} ${gameType === 'solo' ? styles.segActive : ''}`} onClick={() => switchType('solo')}>Solo</button>
+          <button
+            className={`${styles.segBtn} ${gameType === 'normal' ? styles.segActive : ''}`}
+            onClick={() => switchType('normal')}
+          >Normal</button>
+          <button
+            className={`${styles.segBtn} ${gameType === 'solo' ? styles.segActive : ''}`}
+            onClick={() => switchType('solo')}
+          >Solo</button>
+        </div>
+        <div className={styles.ptsWrap}>
+          {isBockRound && <span className={styles.bockPip}>×2</span>}
+          <input
+            className={styles.ptsInput}
+            type="number"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            min={0}
+            placeholder="1"
+            value={points}
+            onChange={e => setPoints(e.target.value)}
+          />
         </div>
       </div>
 
-      {gameType === 'normal' ? (
-        <div className={styles.section}>
-          <span className={styles.label}>Winning team</span>
-          {/* Re / Kontra selector */}
-          <div className={styles.teamToggle}>
-            <button
-              className={`${styles.teamBtn} ${winner === 're' ? styles.teamRe : ''}`}
-              onClick={() => setWinner('re')}
-            >Re</button>
-            <button
-              className={`${styles.teamBtn} ${winner === 'kontra' ? styles.teamKontra : ''}`}
-              onClick={() => setWinner('kontra')}
-            >Kontra</button>
-          </div>
-          {/* Players on winning team */}
-          <div className={styles.playerGrid}>
-            {players.map(p => (
-              <button
-                key={p.id}
-                className={`${styles.playerBtn} ${selected.includes(p.id) ? (winner === 're' ? styles.playerRe : styles.playerKontra) : ''}`}
-                onClick={() => toggle(p.id)}
-              >{p.name}</button>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className={styles.section}>
-          <span className={styles.label}>Solo player</span>
-          <div className={styles.playerGrid}>
-            {players.map(p => (
-              <button
-                key={p.id}
-                className={`${styles.playerBtn} ${selected.includes(p.id) ? styles.playerRe : ''}`}
-                onClick={() => toggle(p.id)}
-              >{p.name}</button>
-            ))}
-          </div>
-          {selected.length === 1 && (
-            <div className={styles.teamToggle} style={{ marginTop: '0.25rem' }}>
-              <button className={`${styles.teamBtn} ${winner === 're' ? styles.teamRe : ''}`} onClick={() => setWinner('re')}>Re wins</button>
-              <button className={`${styles.teamBtn} ${winner === 'kontra' ? styles.teamKontra : ''}`} onClick={() => setWinner('kontra')}>Kontra wins</button>
-            </div>
-          )}
+      {/* Row 2: player buttons */}
+      <div className={styles.playerRow}>
+        {players.map(p => (
+          <button
+            key={p.id}
+            className={`${styles.playerBtn} ${selected.includes(p.id) ? styles.playerSel : ''}`}
+            onClick={() => toggle(p.id)}
+          >{p.name}</button>
+        ))}
+      </div>
+
+      {/* Row 3: winner toggle (solo only, after player chosen) */}
+      {gameType === 'solo' && selected.length === 1 && (
+        <div className={styles.winnerRow}>
+          <button
+            className={`${styles.winBtn} ${winner === 're' ? styles.winRe : ''}`}
+            onClick={() => setWinner('re')}
+          >Re wins</button>
+          <button
+            className={`${styles.winBtn} ${winner === 'kontra' ? styles.winKontra : ''}`}
+            onClick={() => setWinner('kontra')}
+          >Kontra wins</button>
         </div>
       )}
 
-      {/* Points */}
-      <div className={styles.section}>
-        <span className={styles.label}>Points</span>
-        <input
-          className={styles.pointsInput}
-          type="number"
-          inputMode="numeric"
-          pattern="[0-9]*"
-          min={0}
-          placeholder="1"
-          value={points}
-          onChange={e => setPoints(e.target.value)}
-          autoFocus
-        />
-      </div>
-
-      {/* Bock */}
-      <div className={styles.section}>
+      {/* Row 4: bock + undo + submit */}
+      <div className={styles.row4}>
         <label className={styles.bockLabel}>
-          <input className={styles.bockCheck} type="checkbox" checked={addBock} onChange={e => setAddBock(e.target.checked)} />
-          <span>Bock<span className={styles.bockDesc}> — next 4 rounds count double</span></span>
+          <input
+            className={styles.bockCheck}
+            type="checkbox"
+            checked={addBock}
+            onChange={e => setAddBock(e.target.checked)}
+          />
+          <span>Bock <span className={styles.bockDesc}>×2 for 4</span></span>
         </label>
+        {canUndo && (
+          <button className={styles.undoBtn} onClick={onUndo}>↩</button>
+        )}
+        <button
+          className={`${styles.submitBtn} ${!ready ? styles.submitDim : ''}`}
+          onClick={handleSubmit}
+        >Add Round</button>
       </div>
 
-      <button className={styles.submitBtn} onClick={handleSubmit}>Save round</button>
     </div>
   )
 }
