@@ -18,7 +18,12 @@ export default function StatsModal({ players, rounds, scores, onClose }: Props) 
     const losses = rounds.filter(r => (r.result?.scoreDeltas[p.id] ?? 0) < 0).length
     const solos = rounds.filter(r => r.gameType === 'solo' && r.reTeam[0] === p.id).length
     const soloWins = rounds.filter(r => r.gameType === 'solo' && r.reTeam[0] === p.id && r.winner === 're').length
-    return { name: p.name, wins, losses, solos, soloWins, score: scores[p.id] ?? 0 }
+    const normalRounds = rounds.filter(r => r.gameType === 'normal')
+    const reWins = normalRounds.filter(r => r.reTeam.includes(p.id) && r.winner === 're').length
+    const reLosses = normalRounds.filter(r => r.reTeam.includes(p.id) && r.winner === 'kontra').length
+    const kontraWins = normalRounds.filter(r => !r.reTeam.includes(p.id) && r.winner === 'kontra').length
+    const kontraLosses = normalRounds.filter(r => !r.reTeam.includes(p.id) && r.winner === 're').length
+    return { name: p.name, wins, losses, solos, soloWins, reWins, reLosses, kontraWins, kontraLosses, score: scores[p.id] ?? 0 }
   }).sort((a, b) => b.score - a.score)
 
   const globalRaw = loadGlobalStats()
@@ -71,11 +76,16 @@ export default function StatsModal({ players, rounds, scores, onClose }: Props) 
               {gameStats.map(s => (
                 <div key={s.name} className={styles.playerRow}>
                   <div className={styles.playerName}>{s.name}</div>
-                  <div className={styles.playerStats}>
+                  <div className={styles.playerMeta}>
                     <span className={s.score >= 0 ? styles.pos : styles.neg}>
                       {s.score > 0 ? `+${s.score}` : s.score}
                     </span>
-                    <span className={styles.wl}>{s.wins}W / {s.losses}L</span>
+                    <span className={styles.teamRecord}>
+                      <span className={styles.reTag}>Re</span> {s.reWins}W/{s.reLosses}L
+                    </span>
+                    <span className={styles.teamRecord}>
+                      <span className={styles.kontraTag}>Ko</span> {s.kontraWins}W/{s.kontraLosses}L
+                    </span>
                     {s.solos > 0 && (
                       <span className={styles.soloTag}>{s.soloWins}/{s.solos} solo</span>
                     )}
@@ -103,11 +113,16 @@ export default function StatsModal({ players, rounds, scores, onClose }: Props) 
               {globalStats.map(s => (
                 <div key={s.name} className={styles.playerRow}>
                   <div className={styles.playerName}>{s.name}</div>
-                  <div className={styles.playerStats}>
+                  <div className={styles.playerMeta}>
                     <span className={s.totalScore >= 0 ? styles.pos : styles.neg}>
                       {s.totalScore > 0 ? `+${s.totalScore}` : s.totalScore}
                     </span>
-                    <span className={styles.wl}>{s.wins}W / {s.losses}L</span>
+                    <span className={styles.teamRecord}>
+                      <span className={styles.reTag}>Re</span> {s.reWins}W/{s.reLosses}L
+                    </span>
+                    <span className={styles.teamRecord}>
+                      <span className={styles.kontraTag}>Ko</span> {s.kontraWins}W/{s.kontraLosses}L
+                    </span>
                     {s.solos > 0 && (
                       <span className={styles.soloTag}>{s.soloWins}/{s.solos} solo</span>
                     )}

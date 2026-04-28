@@ -14,10 +14,11 @@ export function calculateRound(round: Round, players: Player[], bock: boolean): 
     deltas[soloId] = sign * value * 3
     for (const id of opponents) deltas[id] = -sign * value
   } else {
-    // reTeam always holds the WINNING players regardless of Re/Kontra label
-    const loseTeam = allIds.filter(id => !round.reTeam.includes(id))
-    for (const id of round.reTeam) deltas[id] = value
-    for (const id of loseTeam) deltas[id] = -value
+    // reTeam = the 2 Re players; winner says if Re ('re') or Kontra ('kontra') won
+    const kontraTeam = allIds.filter(id => !round.reTeam.includes(id))
+    const sign = round.winner === 're' ? 1 : -1
+    for (const id of round.reTeam) deltas[id] = sign * value
+    for (const id of kontraTeam) deltas[id] = -sign * value
   }
 
   return { winner: round.winner, scoreDeltas: deltas }

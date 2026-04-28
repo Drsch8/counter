@@ -36,7 +36,7 @@ export default function RoundForm({ players, isBockRound, onSubmit, onUndo, canU
   function handleSubmit() {
     if (selected.length !== needed) return
     const rePoints = Math.max(0, Number(points) || 0)
-    onSubmit({ gameType, reTeam: selected, rePoints, winner: gameType === 'normal' ? 're' : winner }, addBock)
+    onSubmit({ gameType, reTeam: selected, rePoints, winner }, addBock)
     setSelected([])
     setPoints('')
     setWinner('re')
@@ -76,6 +76,9 @@ export default function RoundForm({ players, isBockRound, onSubmit, onUndo, canU
       </div>
 
       {/* Row 2: player buttons */}
+      <div className={styles.playerRowLabel}>
+        {gameType === 'normal' ? 'Re team (2 players)' : 'Solo player'}
+      </div>
       <div className={styles.playerRow}>
         {players.map(p => (
           <button
@@ -86,8 +89,8 @@ export default function RoundForm({ players, isBockRound, onSubmit, onUndo, canU
         ))}
       </div>
 
-      {/* Row 3: winner toggle (solo only, after player chosen) */}
-      {gameType === 'solo' && selected.length === 1 && (
+      {/* Row 3: winner toggle — always for normal, after player selection for solo */}
+      {(gameType === 'normal' || (gameType === 'solo' && selected.length === 1)) && (
         <div className={styles.winnerRow}>
           <button
             className={`${styles.winBtn} ${winner === 're' ? styles.winRe : ''}`}

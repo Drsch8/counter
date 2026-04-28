@@ -131,31 +131,59 @@
   color: var(--ink);
 }
 
-.playerStats {
+.playerMeta {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.85rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
-.pos { color: var(--green); font-weight: 700; font-family: 'Playfair Display', Georgia, serif; }
-.neg { color: var(--red);   font-weight: 700; font-family: 'Playfair Display', Georgia, serif; }
+.pos { color: var(--green); font-weight: 700; font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; }
+.neg { color: var(--red);   font-weight: 700; font-family: 'Playfair Display', Georgia, serif; font-size: 0.95rem; }
 
-.wl {
+.teamRecord {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
   color: var(--ink-3);
-  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.reTag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--navy-soft);
+  border: 1px solid #BFDBFE;
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem;
+  letter-spacing: 0.04em;
+}
+
+.kontraTag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--red);
+  background: var(--red-soft);
+  border: 1px solid #FECACA;
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem;
+  letter-spacing: 0.04em;
 }
 
 .soloTag {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: var(--purple);
   background: var(--purple-soft);
   border: 1px solid #C4B5FD;
   border-radius: var(--radius-sm);
-  padding: 0.15rem 0.45rem;
+  padding: 0.15rem 0.4rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .empty {

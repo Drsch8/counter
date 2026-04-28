@@ -80,6 +80,15 @@
 .ptsInput:focus { border-color: var(--navy); outline: none; }
 
 /* ── Row 2: player buttons ──────────────── */
+.playerRowLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: -0.25rem;
+}
+
 .playerRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
